@@ -6,17 +6,23 @@ import { loadCart } from "../data/cart.js";
 //import '../data/car.js';
 //import '../data/back-end-practice.js'
 
-   async function loadPage() {
-
+async function loadPage() {
+  try {
+    //throw 'error thrown manually';
     await loadProductsFetch();
-    const value = await new Promise((resolve) =>{
-      loadCart(()=>{
-        resolve('value3');
+    const value = await new Promise((resolve,reject) => {
+      loadCart(() => {
+        //resolve("value3");
+        reject('rejected');
       });
-   });
-    renderCheckoutSummary();
-    renderPaymentSummary();
+    });
+
+  } catch (error) {
+    console.log("Unexpected error . Please try again later.");
   }
+  renderCheckoutSummary();
+  renderPaymentSummary();
+}
 
 loadPage();
 
