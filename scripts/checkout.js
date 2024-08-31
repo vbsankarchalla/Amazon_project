@@ -12,8 +12,8 @@ async function loadPage() {
     await loadProductsFetch();
     const value = await new Promise((resolve,reject) => {
       loadCart(() => {
-        //resolve("value3");
-        reject('rejected');
+        resolve("value3");
+        //reject('rejected');
       });
     });
 
