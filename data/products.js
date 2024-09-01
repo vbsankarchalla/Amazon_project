@@ -67,12 +67,12 @@ class Appliances extends Product {
 
 export let products = [];
 
-export function loadProductsFetch(func) {
-  const promise = fetch(
-    'https://supersimplebackend.dev/products'
-  ).then((response) => {
+export async function loadProductsFetch(func) {
+  const promise = await fetch("https://supersimplebackend.dev/products")
+    .then((response) => {
       return response.json();
-    }).then((productData) => {
+    })
+    .then((productData) => {
       products = productData.map((productDetails) => {
         if (productDetails.type === "appliances") {
           return new Appliances(productDetails);
@@ -82,28 +82,23 @@ export function loadProductsFetch(func) {
         return new Product(productDetails);
       });
       func();
-      console.log(products);
-      console.log('load products');
-    }).catch((error)=>{
-      console.log("Unexpected error . Please try again later.");
+      console.log("load products");
     })
-  //return promise;
+    .catch((error) => {
+      console.log("Unexpected error . Please try again later.");
+    });
+  return products;
 }
 
 export function searchProduct(searchItem) {
   let matchingItem;
-  console.log(products);
   products.forEach((product) => {
     if (product.id === searchItem) {
       matchingItem = product;
-      return matchingItem;
     }
   });
+  return matchingItem;
 }
-
-
-
-
 
 // loadProductsFetch().then(() =>{
 //   console.log('nest step');

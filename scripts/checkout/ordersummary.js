@@ -1,8 +1,7 @@
-import {cart} from "../../data/cart-class.js";
-import { products, searchProduct } from "../../data/products.js";
-import { formatCurrency } from "../utils/money.js";
+import { cart } from "../../data/cart-class.js";
+import { searchProduct } from "../../data/products.js";
 import { deliveryOptions, calculateDeliveryDates } from "../deliveryOptions.js";
-import { renderPaymentSummary } from "./paymentSummary.js";
+import { renderPaymentSummary } from "./paymentsummary.js";
 import { renderCheckoutHeader } from "./checkoutHeader.js";
 
 export let cartQty;
@@ -11,7 +10,6 @@ export function renderCheckoutSummary() {
   cartQty = cart.calculateCartQuantity();
   document.querySelector(".js-return-to-home-link").innerHTML =
     renderCheckoutHeader();
-
   cart.cartItems.forEach((cartItem) => {
     let matchingItem,
       productId,
@@ -96,8 +94,7 @@ export function renderCheckoutSummary() {
       document.querySelector(
         ".js-return-to-home-link"
       ).innerHTML = `${cartQty} items`;
-      const paymentHTML = renderPaymentSummary();
-      document.querySelector(".js-payment-summary").innerHTML = paymentHTML;
+      renderPaymentSummary();
     });
   });
 
@@ -137,7 +134,7 @@ export function renderCheckoutSummary() {
       }
     });
   });
-
+  renderPaymentSummary();
   cart.calculateCartQuantity();
 
   function deliveryOptionsHTML(productId, cartItem) {
@@ -180,8 +177,7 @@ export function renderCheckoutSummary() {
       let { deliveryOptionId } = item.dataset;
       cart.updateDeliveryOption(productId, deliveryOptionId);
       renderCheckoutSummary();
-      let paymentHTML = renderPaymentSummary();
-      document.querySelector(".js-payment-summary").innerHTML = paymentHTML;
+      renderPaymentSummary();
     });
   });
 
@@ -201,8 +197,7 @@ export function renderCheckoutSummary() {
       document.querySelector(
         ".js-return-to-home-link"
       ).innerHTML = `${cartQty} items`;
-      let paymentHTML = renderPaymentSummary();
-      document.querySelector(".js-payment-summary").innerHTML = paymentHTML;
+      renderPaymentSummary();
     }
     document
       .querySelector(`.js-quantity-link-${productId}`)

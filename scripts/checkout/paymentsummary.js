@@ -1,4 +1,4 @@
-import { cart } from "../../data/cart.js";
+import { cart } from "../../data/cart-class.js";
 import { searchProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import { deliveryOptions } from "../deliveryOptions.js";
@@ -11,7 +11,7 @@ export function renderPaymentSummary() {
     totalBeforeTax = 0,
     estimatedTax = 0,
     orderTotal = 0;
-  cart.forEach((cartItem) => {
+  cart.cartItems.forEach((cartItem) => {
     const productId = cartItem.productId;
     let product = searchProduct(productId);
     itemsInCart += cartItem.productQty;
@@ -85,6 +85,6 @@ export function renderPaymentSummary() {
         console.log("Unexpected error . Try again later.");
       }
 
-      window.location.href = 'orders.html';
+      window.location.href = "orders.html";
     });
 }
