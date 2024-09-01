@@ -51,7 +51,7 @@ class Cart {
     }
     this.saveToStorage();
   }
-  
+
   removeFromCart(productId) {
     let newCart = [];
     if (productId) {
@@ -90,7 +90,15 @@ class Cart {
     });
     this.saveToStorage();
   }
+  loadCart() {
+    let xhr = new XMLHttpRequest();
+    xhr.addEventListener("load", () => {
+      console.log(xhr.response);
+    });
+    xhr.open("GET", "https://supersimplebackend.dev/cart");
+    xhr.send();
+  }
 }
 
-export const cart = new Cart('cart');
-export const businessCart = new Cart('businesscart');
+export const cart = new Cart("cart");
+export const businessCart = new Cart("businesscart");

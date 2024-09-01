@@ -1,6 +1,7 @@
 import { renderCheckoutSummary } from "../scripts/checkout/ordersummary.js";
 import { renderPaymentSummary } from "../scripts/checkout/paymentsummary.js";
 import { loadProductsFetch } from "../data/products.js";
+import { cart } from "../data/cart-class.js";
 
 async function loadPage() {
   try {

@@ -1,4 +1,4 @@
-import { cart } from "../../data/cart-class.js";
+import {cart} from "../../data/cart-class.js";
 import { searchProduct } from "../../data/products.js";
 import { deliveryOptions, calculateDeliveryDates } from "../deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentsummary.js";
@@ -94,7 +94,7 @@ export function renderCheckoutSummary() {
       document.querySelector(
         ".js-return-to-home-link"
       ).innerHTML = `${cartQty} items`;
-      renderPaymentSummary();
+       renderPaymentSummary();
     });
   });
 

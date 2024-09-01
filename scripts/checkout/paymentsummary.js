@@ -2,7 +2,6 @@ import { cart } from "../../data/cart-class.js";
 import { searchProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import { deliveryOptions } from "../deliveryOptions.js";
-import { addOrders } from "../../data/orders.js";
 
 export function renderPaymentSummary() {
   let itemsInCart = 0,
@@ -66,25 +65,25 @@ export function renderPaymentSummary() {
 `;
   document.querySelector(".js-payment-summary").innerHTML = paymentHTML;
 
-  document
-    .querySelector(".js-place-order")
-    .addEventListener("click", async () => {
-      try {
-        const response = await fetch("https://supersimplebackend.dev/orders", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            cart: cart,
-          }),
-        });
-        const order = await response.json();
-        addOrders(order);
-      } catch (error) {
-        console.log("Unexpected error . Try again later.");
-      }
+  // document
+  //   .querySelector(".js-place-order")
+  //   .addEventListener("click", async () => {
+  //     try {
+  //       const response = await fetch("https://supersimplebackend.dev/orders", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           cart: cart,
+  //         }),
+  //       });
+  //       const order = await response.json();
+  //       addOrders(order);
+  //     } catch (error) {
+  //       console.log("Unexpected error . Try again later.");
+  //     }
 
-      window.location.href = "orders.html";
-    });
+  //     window.location.href = 'orders.html';
+  //   });
 }
