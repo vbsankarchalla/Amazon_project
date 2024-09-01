@@ -1,21 +1,21 @@
 import { renderCheckoutSummary } from "../scripts/checkout/orderSummary.js";
 import { renderPaymentSummary } from "../scripts/checkout/paymentSummary.js";
 import { loadProductsFetch } from "../data/products.js";
-import { loadCart } from "../data/cart.js";
+import { cart } from "../data/cart-class.js";
 //import '../data/cart-class.js';
 //import '../data/car.js';
 //import '../data/back-end-practice.js'
 
 async function loadPage() {
   try {
-    //throw 'error thrown manually';
-    await loadProductsFetch();
-    const value = await new Promise((resolve,reject) => {
-      loadCart(() => {
-        resolve("value3");
-        //reject('rejected');
-      });
-    });
+
+    await loadProductsFetch(renderCheckoutSummary);
+    // const value = await new Promise((resolve) => {
+    //   cart.loadCart(() => {
+    //     resolve("value3");
+    //   });
+    // });
+    await cart.loadCart();
 
   } catch (error) {
     console.log("Unexpected error . Please try again later.");

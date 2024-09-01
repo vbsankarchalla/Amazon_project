@@ -1,5 +1,5 @@
 
- export let cart; 
+export let cart; 
 
 loadFromStorage();
 
@@ -25,8 +25,6 @@ function saveToStorage() {
 }
 
 export function addToCart(productId) {
-  // const { productId } = button.dataset;
-  // const { productPrice } = button.dataset;
   const quantityClass = document.querySelector(`.js-quantity-selector-${productId}`);
   const ProductQuantity = Number(quantityClass.value);
 
@@ -40,7 +38,6 @@ export function addToCart(productId) {
   if (!matchingItem) {
     cart.push({
       productId: productId,
-      productPrice: productPrice,
       productQty: ProductQuantity,
       deliveryOptionId : '1'
     });
@@ -102,3 +99,8 @@ export function loadCart(func) {
   xhr.open("GET", "https://supersimplebackend.dev/cart");
   xhr.send();
   }
+
+
+  // async function loadCartFetch(){
+
+  // }

@@ -26,7 +26,7 @@ class Cart {
   }
 
   saveToStorage() {
-    localStorage.setItem(localStorageKey, JSON.stringify(this.cartItems));
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
   }
 
   addToCart(productId) {
@@ -90,13 +90,22 @@ class Cart {
     });
     this.saveToStorage();
   }
-
 }
 
-
 export const cart = new Cart('cart');
-const businessCart = new Cart('businesscart');
+export const businessCart = new Cart('businesscart');
 
 
 console.log(cart);
-console.log(businessCart);
+
+export function loadCart(func) {
+
+  let xhr = new XMLHttpRequest();
+  xhr.addEventListener("load", () => {
+    console.log(xhr.response);
+    func();
+  });
+  
+  xhr.open("GET", "https://supersimplebackend.dev/cart");
+  xhr.send();
+  }

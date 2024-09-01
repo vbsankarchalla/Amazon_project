@@ -1,14 +1,12 @@
 import {cart} from "../data/cart-class.js";
-import {products,loadProducts } from "../data/products.js";
-import { formatCurrency } from "./utils/money.js";
+import {products,loadProductsFetch } from "../data/products.js";
 
 
-loadProducts(renderProductsGrid);
+loadProductsFetch(renderProductsGrid);
 
-function renderProductsGrid () {
+function renderProductsGrid() {
 
 let productsHTML = "";
-
 products.forEach((product) => {
   productsHTML += `<div class="products-grid">
       <div class="product-container">
@@ -86,7 +84,7 @@ products.forEach((product) => {
   document.querySelectorAll(".js-addtocart").forEach((button) => {
     button.addEventListener("click", () => {
       let { productId } = button.dataset;
-      addToCart(productId);
+      cart.addToCart(productId);
       updateCartQuantity(button);
     });
   });

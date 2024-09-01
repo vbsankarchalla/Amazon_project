@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 18a.
+      // const xhr = new XMLHttpRequest();
+      // xhr.addEventListener('load',(response)=>{
+      //   console.log(xhr.response);
+      // });
+      // xhr.open('GET','https://supersimplebackend.dev/greeting');
+      // xhr.send();
+
+      // 18 b.
+      // fetch('https://supersimplebackend.dev/greeting')
+      // .then((response)=>{
+      //   console.log(response.text());
+      // });
+
+      // 18 c.
+      // async function gettingData() {
+      //   await fetch('https://supersimplebackend.dev/greeting')
+      //   .then((response) => {
+      //     console.log(response.text());
+      //   });
+      // }
+      // gettingData();
+
+      // 18 d.
+      // async function sendingData() {
+      //   const response = await fetch(
+      //     "https://supersimplebackend.dev/greeting",
+      //     {
+      //       method: "POST",
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //       body: JSON.stringify({
+      //         name: "Sankar",
+      //       }),
+      //     }).then((rsl)=>{
+      //       console.log(rsl);
+      //     });
+      //   // const result = await response.json();
+      //   // console.log('Response :', response);
+      //   // console.log('Result :',result);
+      // }
+      // sendingData();
+
+
+      // 18 e. 18 f.
+      // function requestToAmazon(){
+      //   try{
+      //   fetch('https://amazon.com').then((response)=>{
+      //     console.log(response);
+      //   });
+      //  } catch (error){
+      //   console.log('CORS error . Your request was blocked by the backend');
+      //  }
+      // }
+
+      // requestToAmazon();
+
+
+
+      // 18 g.
+    //   try {
+    //   const result = fetch('https://supersimplebackend.dev',{
+    //     method : 'POST',
+    //     'Context-Type' : 'application/json',
+        
+    //   }).then((response)=>{
+    //     if(response.status >= 400){
+    //       throw response;
+    //     }
+    //     console.log(response);
+    //   });
+    // } catch (error) {
+    //   console.log('Network error. Please try again later');
+    // }
+
+
+    </script>
+  </body>
+</html>

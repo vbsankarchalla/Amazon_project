@@ -1,13 +1,4 @@
 import { formatCurrency } from "../scripts/utils/money.js";
-export function searchProduct(searchItem) {
-  let matchingItem;
-  products.forEach((product) => {
-    if (product.id === searchItem) {
-      matchingItem = product;
-    }
-  });
-  return matchingItem;
-}
 
 class Product {
   id;
@@ -76,7 +67,7 @@ class Appliances extends Product {
 
 export let products = [];
 
-export function loadProductsFetch() {
+export function loadProductsFetch(func) {
   const promise = fetch(
     'https://supersimplebackend.dev/products'
   ).then((response) => {
@@ -90,39 +81,57 @@ export function loadProductsFetch() {
         }
         return new Product(productDetails);
       });
+      func();
+      console.log(products);
       console.log('load products');
     }).catch((error)=>{
       console.log("Unexpected error . Please try again later.");
     })
-  return promise;
+  //return promise;
 }
+
+export function searchProduct(searchItem) {
+  let matchingItem;
+  console.log(products);
+  products.forEach((product) => {
+    if (product.id === searchItem) {
+      matchingItem = product;
+      return matchingItem;
+    }
+  });
+}
+
+
+
+
+
 // loadProductsFetch().then(() =>{
 //   console.log('nest step');
 // });
 
-export function loadProducts(func) {
-  let xhr = new XMLHttpRequest();
+// export function loadProducts(func) {
+//   let xhr = new XMLHttpRequest();
 
-  xhr.addEventListener("load", () => {
-    products = JSON.parse(xhr.response).map((productDetails) => {
-      if (productDetails.type === "appliances") {
-        return new Appliances(productDetails);
-      } else if (productDetails.type === "clothing") {
-        return new Clothing(productDetails);
-      }
-      return new Product(productDetails);
-    });
-    func();
-    console.log("Products Loaded..!");
-  });
+//   xhr.addEventListener("load", () => {
+//     products = JSON.parse(xhr.response).map((productDetails) => {
+//       if (productDetails.type === "appliances") {
+//         return new Appliances(productDetails);
+//       } else if (productDetails.type === "clothing") {
+//         return new Clothing(productDetails);
+//       }
+//       return new Product(productDetails);
+//     });
+//     func();
+//     console.log("Products Loaded..!");
+//   });
 
-  xhr.addEventListener("error ", (error) => {
-    console.log("Unexpected error . Please try again later.");
-  });
+//   xhr.addEventListener("error ", (error) => {
+//     console.log("Unexpected error . Please try again later.");
+//   });
 
-  xhr.open("GET", "https://supersimplebackend.dev/products");
-  xhr.send();
-}
+//   xhr.open("GET", "https://supersimplebackend.dev/products");
+//   xhr.send();
+// }
 
 /*
 export const products = [
