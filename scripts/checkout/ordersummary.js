@@ -16,14 +16,14 @@ export function renderCheckoutSummary() {
       productImg,
       productName,
       productPrice,
-      productQty;
+      quantity;
     matchingItem = searchProduct(cartItem.productId);
     if (matchingItem) {
       productId = matchingItem.id;
       productImg = matchingItem.image;
       productName = matchingItem.name;
       productPrice = matchingItem.priceCents;
-      productQty = cartItem.productQty;
+      quantity = cartItem.quantity;
     }
 
     let deliveryOption, deliveryDate, deliveryDateString;
@@ -53,7 +53,7 @@ export function renderCheckoutSummary() {
                   </div>
                   <div class="product-quantity">
                     <span>
-                      Quantity: <span class="quantity-label js-quantity-label-${productId}">${productQty}</span>
+                      Quantity: <span class="quantity-label js-quantity-label-${productId}">${quantity}</span>
                     </span>
                     <span class="update-quantity-link js-update-quantity-link-${productId} link-primary"
                     data-product-id = "${productId}">
