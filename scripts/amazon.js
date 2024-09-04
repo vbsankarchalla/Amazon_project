@@ -77,7 +77,7 @@ function renderProductsGrid() {
       }, 2000);
       addedMessageTimeouts[productId] = timeoutId;
     }
-
+    const productsgrid = document.querySelector(".js-products-grid").innerHTML;
     document.querySelector(".js-products-grid").innerHTML = productsHTML;
     const addedMessageTimeouts = {};
     document.querySelectorAll(".js-addtocart").forEach((button) => {
