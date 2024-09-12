@@ -98,6 +98,11 @@ class Cart {
     xhr.open("GET", "https://supersimplebackend.dev/cart");
     xhr.send();
   }
+  async loadCartFetch() {
+    const response = await fetch('https://supersimplebackend.dev/cart');
+    const text =  await response.text();
+    return text;
+  }
 
 
   

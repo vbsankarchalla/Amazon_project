@@ -1,29 +1,18 @@
+import { searchProduct,loadProductsFetch } from "../data/products.js";
+import { orders } from "../data/orders.js";
 import { formatCurrency } from "./utils/money.js";
 import dayjs from "https://cdn.skypack.dev/dayjs";
-import { searchProduct } from "../data/products.js";
 
-export let orders = JSON.parse(localStorage.getItem("orders")) || [];
+async function loadPage(){
+  await loadProductsFetch();
 
-export function addOrders(order) {
-  orders.unshift(order);
-  saveToStorage(orders);
-  renderOrdersHTML(order);
-}
-
-function saveToStorage(orders) {
-  localStorage.setItem("orders", JSON.stringify(orders));
-}
-
-
-function renderOrdersHTML(order) {
-  let ordersHTML = "";
+  let ordersHTML = '';
   try {
     orders.forEach((order) => {
       const orderId = order.id;
       const orderDateString = dayjs(order.orderTime);
       const orderDate = orderDateString.format("MMMM DD");
       const orderAmount = formatCurrency(order.totalCostCents);
-      const orderedProducts = order.products;
       ordersHTML += `
     <div class="order-container">
       <div class="order-header">
@@ -42,26 +31,21 @@ function renderOrdersHTML(order) {
           <div>${orderId}</div>
         </div>
       </div>
-      <div class="order-details-grid js-order-details-grid"></div>
+      <div class="order-details-grid">
+      ${productsLlistHTML(order)}
+      </div>
   </div>
 `;
     });
-    const ordersGrid = document.querySelector(".js-orders-grid").innerHTML;
-    if(ordersGrid){
-    document.querySelector(".js-orders-grid").innerHTML = ordersHTML;
-    renderProductsHTML(orderedProducts, orderId);
-    } else {
-        console.error(`Order container for orderId:  not found.`);
-    }
   } catch (error) {
     console.log("Unable to generate the HTML for ordersContainer.   " + error);
   }
-}
 
-function renderProductsHTML(orderedProducts, orderId) {
+function productsLlistHTML(order) {
   let productsHTML = ``;
 
   try {
+    const orderedProducts = order.products;
     orderedProducts.forEach((element) => {
       const matchingProduct = searchProduct(element.productId);
       const productImage = matchingProduct.image;
@@ -71,7 +55,7 @@ function renderProductsHTML(orderedProducts, orderId) {
       );
       const productQuantity = element.quantity;
 
-      productsHTML += `
+      productsListHTML += `
           <div class="product-image-container">
             <img src="${productImage}">
           </div>
@@ -91,7 +75,7 @@ function renderProductsHTML(orderedProducts, orderId) {
             </button>
           </div>
           <div class="product-actions">
-            <a href="tracking.html?orderId=${orderId}&productId=${element.productId}">
+            <a href="tracking.html?orderId=${order.id}&productId=${element.productId}">
               <button class="track-package-button button-secondary">
                 Track package
               </button>
@@ -99,8 +83,12 @@ function renderProductsHTML(orderedProducts, orderId) {
           </div>
       `;
     });
-    document.querySelector(".js-order-details-grid").innerHTML = productsHTML;
+    return productsListHTML;
   } catch (error) {
     console.log("Unable to generate HTML for Products.   " + error);
   }
 }
+  document.querySelector(".js-orders-grid").innerHTML = ordersHTML;
+}
+
+loadPage();
