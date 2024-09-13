@@ -2,6 +2,7 @@ import { searchProduct,loadProductsFetch } from "../data/products.js";
 import { orders } from "../data/orders.js";
 import { formatCurrency } from "./utils/money.js";
 import dayjs from "https://cdn.skypack.dev/dayjs";
+import { cart } from "../data/cart-class.js";
 
 async function loadPage(){
   await loadProductsFetch();
@@ -42,7 +43,7 @@ async function loadPage(){
   }
 
 function productsLlistHTML(order) {
-  let productsHTML = ``;
+  let productsListHTML = ``;
 
   try {
     const orderedProducts = order.products;
@@ -69,7 +70,8 @@ function productsLlistHTML(order) {
             <div class="product-quantity">
               Quantity: ${productQuantity}
             </div>
-            <button class="buy-again-button button-primary">
+            <button class="buy-again-button button-primary js-buy-again-button"
+            data-product-id = "${element.productId}">
               <img class="buy-again-icon" src="images/icons/buy-again.png">
               <span class="buy-again-message">Buy it again</span>
             </button>
@@ -91,4 +93,9 @@ function productsLlistHTML(order) {
   document.querySelector(".js-orders-grid").innerHTML = ordersHTML;
 }
 
-loadPage();
+await loadPage();
+document.querySelectorAll('.js-buy-again-button').forEach((button) => {
+  button.addEventListener('click', () =>{
+    cart.addToCart(button.dataset.productId);
+})
+});

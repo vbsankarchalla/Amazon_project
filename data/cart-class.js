@@ -29,11 +29,13 @@ class Cart {
     localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
   }
 
-  addToCart(productId) {
+  addToCart(productId, ProductQuantity = 1) {
     const quantityClass = document.querySelector(
       `.js-quantity-selector-${productId}`
     );
-    const ProductQuantity = Number(quantityClass.value);
+    if (!ProductQuantity) {
+     ProductQuantity = Number(quantityClass.value);
+    }
 
     let matchingItem;
     this.cartItems.forEach((cartItem) => {
