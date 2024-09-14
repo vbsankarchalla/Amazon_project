@@ -52,11 +52,11 @@
     </div>
 
     <div class="main">
-      <div class="order-tracking">
-        <a class="back-to-orders-link link-primary" href="orders.html">
-          View all orders
-        </a>
-
+      <a class="back-to-orders-link link-primary" href="orders.html">
+        View all orders
+      </a>
+      <div class="order-tracking js-order-tracking">
+        
         <div class="delivery-date">
           Arriving on Monday, June 13
         </div>
@@ -88,11 +88,7 @@
         </div>
       </div>
     </div>
-    <script>
-      const url = new URL(window.location.href);
-      console.log(url.searchParams.get('orderId'));
-      console.log(url.searchParams.get('productId'));
-      //////////////////   url.searchParams is not working need to loook........
+    <script type ="module" src="/scripts/tracking.js">
     </script>
   </body>
 </html>

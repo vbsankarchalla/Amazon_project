@@ -77,7 +77,7 @@ function productsLlistHTML(order) {
             </button>
           </div>
           <div class="product-actions">
-            <a href="tracking.html?orderId=${order.id}&productId=${element.productId}">
+            <a href="tracking.html?orderId=${order.id}&productId=${element.productId}&productQuantity=${element.quantity}">
               <button class="track-package-button button-secondary">
                 Track package
               </button>
