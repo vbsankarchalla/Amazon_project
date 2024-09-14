@@ -91,11 +91,15 @@ function productsLlistHTML(order) {
   }
 }
   document.querySelector(".js-orders-grid").innerHTML = ordersHTML;
+  document.querySelector('.js-orders-cart-quantity').innerHTML = cart.calculateCartQuantity();
 }
 
 await loadPage();
+
+
 document.querySelectorAll('.js-buy-again-button').forEach((button) => {
   button.addEventListener('click', () =>{
-    cart.addToCart(button.dataset.productId);
+     cart.addToCart(button.dataset.productId);
+    document.querySelector('.js-orders-cart-quantity').innerHTML = cart.calculateCartQuantity();
 })
 });

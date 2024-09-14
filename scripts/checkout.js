@@ -9,7 +9,6 @@ async function loadPage() {
       await loadProductsFetch(),
       await cart.loadCartFetch()
     ]);
-    // const products = await loadProductsFetch(renderCheckoutSummary);
 
   } catch (error) {
     console.log("Unexpected error . Please try again later.");
