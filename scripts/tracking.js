@@ -1,6 +1,7 @@
-import { orders } from "../data/orders.js";
+import { orders,getOrder } from "../data/orders.js";
 import dayjs from "https://cdn.skypack.dev/dayjs";
 import { searchProduct, loadProductsFetch } from "../data/products.js";
+import { cart } from "../data/cart-class.js";
 
 async function loadPage() {
   await loadProductsFetch();
@@ -10,62 +11,61 @@ async function loadPage() {
   const productId = url.searchParams.get("productId");
   const productQuantity = url.searchParams.get("productQuantity");
 
-  let trackingHTML = "";
-  let deliveryDate = "";
-  let productInfo = "";
-  let productName = "";
-  let productImage = "";
-  orders.forEach((order) => {
-    console.log(order);
+  document.querySelector('.js-cart-quantity').innerHTML = cart.calculateCartQuantity();
 
-    if (orderId === order.id) {
-      let products = order.products;
-      products.forEach((product) => {
-        if (productId === product.productId) {
-          deliveryDate = dayjs(product.estimatedDeliveryTime).format(
-            "dddd, MMM DD"
-          );
-          productInfo = searchProduct(productId);
-          productName = productInfo.name;
-          productImage = productInfo.image;
-          console.log(productQuantity);
-          trackingHTML += `
+  const order = getOrder(orderId);
+  const product = searchProduct(productId);
+  let productDetails = '';
+  let trackingHTML ='';
+
+    order.products.forEach((details) => {
+        if (details.productId === product.id) {
+            productDetails = details;
+          }
+    });
+
+    const today = dayjs();
+    const orderTime = dayjs(order.orderTime);
+    const deliveryTime = dayjs(productDetails.estimatedDeliveryTime);
+    const percentProgress = ((today - orderTime) / (deliveryTime - orderTime)) * 100;
+
+    trackingHTML += `
                     <div class="delivery-date">
-                    ${deliveryDate}
+                    ${deliveryTime.format("ddd MMMM mm ")}
                     </div>
 
                     <div class="product-info">
-                    ${productName}
+                    ${product.name}
                     </div>
 
                     <div class="product-info">
                     Quantity: ${productQuantity}
                     </div>
 
-                    <img class="product-image" src=${productImage}>
+                    <img class="product-image" src=${product.image}>
 
                     <div class="progress-labels-container">
-                    <div class="progress-label">
+                    <div class="progress-label ${
+                        percentProgress < 50 ? 'current-status' : ''
+                      }">
                         Preparing
                     </div>
-                    <div class="progress-label current-status">
+                    <div class="progress-label ${
+                        (percentProgress >= 50 && percentProgress < 100) ? 'current-status' : ''
+                    }">
                         Shipped
                     </div>
-                    <div class="progress-label">
+                    <div class="progress-label ${
+                        percentProgress >= 100 ? 'current-status' : ''
+                    }">
                         Delivered
                     </div>
                     </div>
 
                     <div class="progress-bar-container">
-                    <div class="progress-bar"></div>
+                    <div class="progress-bar" style="width: ${percentProgress}%;"></div>
                     </div>`;
-        }
-      });
-    }
-  });
 
   document.querySelector('.js-order-tracking').innerHTML = trackingHTML;
 }
 loadPage();
-
-// ((currentTime - orderTime) / (deliveryTime - orderTime)) * 100
