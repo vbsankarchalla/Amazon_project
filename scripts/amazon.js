@@ -12,9 +12,14 @@ function renderProductsGrid() {
 
   if(search) {
      filteredProducts = products.filter((product) => {
-      return product.name.toLowerCase().includes(search.toLowerCase());
+      let matchingKeyword = false;
+      product.keywords.forEach(keyword => {
+        if(keyword.toLocaleLowerCase() === search.toLocaleLowerCase()) {
+          matchingKeyword = true;
+        }
+      })
+      return matchingKeyword || product.name.toLowerCase().includes(search.toLowerCase());
     });
-
   }
   filteredProducts.forEach((product) => {
     productsHTML += `<div class="products-grid">
