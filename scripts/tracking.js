@@ -3,7 +3,7 @@ import dayjs from "https://cdn.skypack.dev/dayjs";
 import { searchProduct, loadProductsFetch } from "../data/products.js";
 import { cart } from "../data/cart-class.js";
 
-let searchItem = "";
+let search = "";
 
 async function loadPage() {
   await loadProductsFetch();
@@ -45,7 +45,7 @@ async function loadPage() {
                       <input class="search-bar js-search-bar" type="text" placeholder="Search">
 
                       <div>
-                        <a href="amazon.html?searchItem=${searchItem}">
+                        
                         <button class="search-button js-search-button">
                           <img class="search-icon" src="images/icons/search-icon.png">
                         </button>
@@ -118,9 +118,14 @@ async function loadPage() {
   cart.calculateCartQuantity();
 
   document.querySelector(".js-search-button").addEventListener("click", () => {
-    searchItem = document.querySelector(".js-search-bar").value;
-    console.log("Search initiated for: ", searchItem);
-    loadPage();  // Re-call loadPage to reflect search changes if needed
+    search = document.querySelector(".js-search-bar").value;
+    window.location.href = `amazon.html?search=${search}`;
+  });
+  document.querySelector('.js-search-bar').addEventListener("keydown", (event) => {
+    if(event.key == 'Enter'){
+    search = document.querySelector(".js-search-bar").value;
+    window.location.href = `amazon.html?search=${search}`;
+    }
   });
 }
 

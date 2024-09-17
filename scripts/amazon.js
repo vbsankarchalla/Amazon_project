@@ -2,13 +2,21 @@ import { cart } from "../data/cart-class.js";
 import { products, loadProductsFetch } from "../data/products.js";
 
 const url = new URL(window.location.href);
-const searchItem = url.searchParams.get('searchItem');
-console.log('searched : '+searchItem);
+const search = url.searchParams.get('search');
 
 loadProductsFetch(renderProductsGrid);
 function renderProductsGrid() {
   let productsHTML = "";
-  products.forEach((product) => {
+  let filteredProducts;
+  filteredProducts = products;
+
+  if(search) {
+     filteredProducts = products.filter((product) => {
+      return product.name.toLowerCase().includes(search.toLowerCase());
+    });
+
+  }
+  filteredProducts.forEach((product) => {
     productsHTML += `<div class="products-grid">
       <div class="product-container">
         <div class="product-image-container">
